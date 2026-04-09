@@ -28,7 +28,12 @@ function App() {
           </div>
         ) : (
           <div className="flex flex-col justify-center items-center">
-            {!loading && <DisplayPokemon individualInfo={individualInfo} />}
+            {individualInfo.length > 0 && (
+              <DisplayPokemon individualInfo={individualInfo} />
+            )}
+
+            
+            {loading && <SkeletonCard individualInfo={individualInfo} />}
 
             {!loading &&
               searchedPokemon.trim() === "" &&
@@ -42,8 +47,6 @@ function App() {
               )}
           </div>
         )}
-
-        {loading && <SkeletonCard individualInfo={individualInfo} />}
       </main>
     </div>
   );
