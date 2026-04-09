@@ -7,7 +7,8 @@ import SkeletonCard from "./components/SkeletonCard";
 
 function App() {
   const [searchedPokemon, setSearchedPokemon] = useState<string>("");
-  const { loading, error, individualInfo, loadMore } = usePokemon(searchedPokemon);
+  const { loading, error, individualInfo, loadMore } =
+    usePokemon(searchedPokemon);
 
   return (
     <div className="bg-[#FF6467] font-neucha text-xl min-h-screen">
@@ -21,21 +22,28 @@ function App() {
         />
       </header>
       <main className="flex flex-col items-center pb-10">
-        
         {error ? (
           <div className="flex items-center justify-center mt-10">
             <DisplayError />
           </div>
         ) : (
           <div className="flex flex-col justify-center items-center">
-            !loading && <DisplayPokemon individualInfo={individualInfo} />
-            <button onClick ={loadMore} className="bg-white rounded-2xl w-32 mt-3 flex items-center justify-center">Load more</button>
-          </div>
+            {!loading && <DisplayPokemon individualInfo={individualInfo} />}
 
+            {!loading &&
+              searchedPokemon.trim() === "" &&
+              individualInfo.length > 0 && (
+                <button
+                  onClick={loadMore}
+                  className="bg-white rounded-2xl w-32 mt-3 flex items-center justify-center"
+                >
+                  Load more
+                </button>
+              )}
+          </div>
         )}
 
         {loading && <SkeletonCard individualInfo={individualInfo} />}
-
       </main>
     </div>
   );
